@@ -1,4 +1,9 @@
 # hotelreview
+How to run:
+
+Run home.php via xampp through: localhost/SawPhp/hotelreview/home.php
+
+
 
 Database name: hotelreview
 3 tables: users, hotels, reviews
