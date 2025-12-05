@@ -1,7 +1,7 @@
 # hotelreview
 How to run:
 
-Run home.php via xampp through: localhost/SawPhp/hotelreview/home.php
+Run home.php via xampp through: localhost/--your folder name--/home.php
 
 
 
