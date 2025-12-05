@@ -38,9 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Store values in variables
             $un  = $row['user_name'];   // username
+            $uid = $row['user_id'];
             echo "<h2>Logged in as: $un </h2>";
 
             $_SESSION['login_user'] = $un;
+            $_SESSION['login_userid'] = $uid;
             header("location: welcome.php");
         }
         else {
