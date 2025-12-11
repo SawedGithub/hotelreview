@@ -9,4 +9,11 @@
    $un = $_SESSION['login_user'];
    $uid = $_SESSION['login_userid'];
 
+
+   if (isset($_GET['hide_file'])) {
+    $_SESSION['hide_file'] = true;
+}
+   else {
+    $_SESSION['hide_file'] = false;
+   }
 ?>

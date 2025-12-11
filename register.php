@@ -6,7 +6,7 @@ include ('header.html');
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-	require ('mysqli_connect.php');
+	require_once ('mysqli_connect.php');
 
 	$errors = array(); // Initialize an error array.
 	
@@ -50,14 +50,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		<h2>You are now registered</h2><p><br /></p>';	
 		
 		} else { // If it did not run OK.
-			
+			;
 			// Public message:
 			echo '<h1>System Error</h1>
-			<p class="error">You could not be registered due to a system error. We apologize for any inconvenience.</p>'; 
+			<p class="error">You could not be registered. We apologize for any inconvenience.</p>'; 
 			
 			// Debugging message:
-			echo '<p>' . mysqli_error($dbc) . '<br /><br />Query: ' . $q . '</p>';
-						
+			if (mysqli_errno($dbc) == 1062) {
+        		echo "<p class='error'>You have already registered.</p>";
+			}
+			mysqli_close($dbc);
+			exit();
 		} // End of if ($r) IF.
 		
 		mysqli_close($dbc); // Close the database connection.
