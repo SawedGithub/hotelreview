@@ -1,19 +1,21 @@
 <?php
-   // Start the session
-   session_start();
+// session.php
 
-   if(!isset($_SESSION['login_user'])&&!isset($_SESSION['login_userid'])){
-      header("location: login.php");
-      die();
-   }
-   $un = $_SESSION['login_user'];
-   $uid = $_SESSION['login_userid'];
-
-
-   if (isset($_GET['hide_file'])) {
-    $_SESSION['hide_file'] = true;
+// 1. ALWAYS START THE SESSION FIRST
+if (!isset($_SESSION)) {
+    session_start();
 }
-   else {
-    $_SESSION['hide_file'] = false;
-   }
+
+// 2. CHECK IF THE USER IS LOGGED IN
+// Note: We use 'user_id' as set in the final login.php file
+if (!isset($_SESSION['user_id'])) {
+    // If user_id is NOT set, redirect them to the login page
+    header("Location: login.php");
+    exit();
+}
+
+// 3. IF LOGGED IN, DEFINE VARIABLES FOR CONVENIENCE
+$uid = $_SESSION['user_id'];
+$un = $_SESSION['user_name']; // Use 'user_name' as set in login.php
+
 ?>

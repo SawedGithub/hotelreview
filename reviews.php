@@ -1,74 +1,84 @@
 <?php
-    include('Welcome.php');
+    // Line 2 fix: Removed the incorrect include('Welcome.php')
+    include('session.php'); 
     $page_title = 'Hotel Reviews';
-    require_once ('mysqli_connect.php');
-    $_SESSION['hide_file'] = true;
+    
+    // Include the HTML header/CSS link now
+    include ('welcome.php');
+    
+    require_once ('mysqli_connect.php'); // Ensure connection is made only once
+    
+
 ?>
 
 
-<h2>Available Hotels</h2>
+<h2>View all available Hotel reviews</h2>
 
 <?php 
+    // Query to retrieve all hotels
+    $q = "SELECT hotel_id, hotel_name, address, city, country FROM hotels ORDER BY hotel_id ASC";
+    $result = mysqli_query($dbc, $q);
 
-	$q = "SELECT hotel_id, hotel_name,address , city, country FROM hotels ORDER BY hotel_id ASC";
-	$result = mysqli_query($dbc, $q);
-
-	if (!$result) {
-		echo "Database Error: " . mysqli_error($dbc);
-	}
-	
-	// Display hotels
-	if (mysqli_num_rows($result) > 0) {
-		echo "<p>";
-		
-		while ($row = mysqli_fetch_assoc($result)) {
+    if (!$result) {
+        echo "Database Error: " . mysqli_error($dbc);
+    }
+    
+    // Display hotels
+    if (mysqli_num_rows($result) > 0) {
+        
+        while ($row = mysqli_fetch_assoc($result)) {
 
             $hotel_id = $row['hotel_id'];
-			echo "<div style='border:1px solid #ccc; padding:10px; margin-bottom:10px;'>";
-            echo "<strong>Hotel name:</strong> " . htmlspecialchars($row['hotel_name']) . "<br>";
-            echo "<strong>Address:</strong> " . htmlspecialchars($row['address']) . "<br>";
-            echo "<strong>City:</strong> " . htmlspecialchars($row['city']) . "<br>";
-            echo "<strong>Country:</strong> " . htmlspecialchars($row['country']) . "<br>";
+            
+            echo "<div class='hotel-card'>"; 
+            echo "<span class='data-label'>Hotel name:</span> " . htmlspecialchars($row['hotel_name']) . "<br>";
+            echo "<span class='data-label'>Address:</span> " . htmlspecialchars($row['address']) . "<br>";
+            echo "<span class='data-label'>City:</span> " . htmlspecialchars($row['city']) . "<br>";
+            echo "<span class='data-label'>Country:</span> " . htmlspecialchars($row['country']) . "<br>";
 
-            echo "<button onclick='toggleReviews($hotel_id)'>View reviews</button>";
-            echo "<div id='reviews-$hotel_id' style='display:none; margin-top:10px;'>";
+            echo "<button onclick='toggleReviews($hotel_id)' style='margin-top:10px;'>View reviews</button>";
+            
+            echo "<div id='reviews-$hotel_id' style='display:none; margin-top:15px;'>"; 
 
+            // Query to retrieve reviews for this specific hotel
             $rQuery = "SELECT users.user_name, reviews.rating, reviews.description, reviews.creation_date
-               FROM reviews
-               JOIN users ON reviews.user_id = users.user_id
-               WHERE reviews.hotel_id = $hotel_id
-               ORDER BY reviews.creation_date DESC";
+                FROM reviews
+                JOIN users ON reviews.user_id = users.user_id
+                WHERE reviews.hotel_id = $hotel_id
+                ORDER BY reviews.creation_date DESC";
 
             $rResult = mysqli_query($dbc, $rQuery);
 
             if ($rResult && mysqli_num_rows($rResult) > 0) {
-                echo "<table border='1' cellpadding='5' cellspacing='0'>";
+                
+                echo "<table class='review-table'>"; 
                 echo "<tr><th>User</th><th>Rating</th><th>Description</th><th>Date</th></tr>";
                 while ($rRow = mysqli_fetch_assoc($rResult)) {
+                    $rating_display = "<span class='rating-text'>" . $rRow['rating'] . "/5</span>";
                     echo "<tr>";
                     echo "<td>" . htmlspecialchars($rRow['user_name']) . "</td>";
-                    echo "<td>" . $rRow['rating'] . "/5</td>";
-                    echo "<td>" . htmlspecialchars($rRow['description']) . "</td>";
+                    echo "<td>" . $rating_display . "</td>";
+                    // Uses the confirmed column name: description
+                    echo "<td>" . htmlspecialchars($rRow['description']) . "</td>"; 
                     echo "<td>" . $rRow['creation_date'] . "</td>";
                     echo "</tr>";
                 }
                 echo "</table>";
             } else {
-                echo "<p>No reviews yet for this hotel.</p>";
+                echo "<p style='margin-top:10px;'>No reviews yet for this hotel.</p>";
             }
 
-            echo "<button onclick='showAverageRating($hotel_id)'>Show Average Rating</button>";
-            echo "<p id='avg-$hotel_id'></p>"; // Placeholder for average rating
+            echo "<button onclick='showAverageRating($hotel_id)' style='margin-top:15px;'>Show Average Rating</button>";
+            echo "<p id='avg-$hotel_id' style='font-weight:bold; margin-top:10px;'></p>"; // Placeholder for average rating
 
             echo "</div>"; // End reviews div
             echo "</div>"; // End hotel div
-		}
+        }
 
-		echo "</p>";
-
-	} else {
-		echo "<p>No hotels found.</p>";
-	}
+    } else {
+        // This is the message you saw if the hotels table is empty
+        echo "<p>No hotels found.</p>"; 
+    }
 
 ?>
 
@@ -88,10 +98,11 @@ function showAverageRating(hotelId) {
     fetch('get_avg_rating.php?hotel_id=' + hotelId)
     .then(response => response.json())
     .then(data => {
+        var avgElement = document.getElementById('avg-' + hotelId);
         if (data.avg !== null) {
-            document.getElementById('avg-' + hotelId).innerText = 'Average Rating: ' + data.avg + ' / 5';
+            avgElement.innerHTML = 'Average Rating: <span class="rating-text">' + data.avg + ' / 5</span>';
         } else {
-            document.getElementById('avg-' + hotelId).innerText = 'No reviews yet.';
+            avgElement.innerText = 'No reviews yet.';
         }
     })
     .catch(error => {
@@ -99,3 +110,6 @@ function showAverageRating(hotelId) {
     });
 }
 </script>
+
+</div> </body>
+</html>
