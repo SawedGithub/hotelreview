@@ -16,6 +16,7 @@ reviews (review_id, user_id, hotel_id, rating, description, creation_date) revie
 
 
 Table sqls:
+```
 CREATE TABLE users(
     user_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
     user_name VARCHAR(40) NOT NULL,
@@ -52,5 +53,5 @@ CREATE TABLE reviews(
         REFERENCES hotels(hotel_id),
 
     CONSTRAINT unique_user_hotel_review UNIQUE (user_id, hotel_id)
-);
+);```
 
