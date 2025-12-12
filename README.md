@@ -53,5 +53,5 @@ CREATE TABLE reviews(
         REFERENCES hotels(hotel_id),
 
     CONSTRAINT unique_user_hotel_review UNIQUE (user_id, hotel_id)
-);```
+);
 
