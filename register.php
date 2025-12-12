@@ -41,32 +41,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		// Register the user in the database...
 		
 		// Make the query:
-		$q = "INSERT INTO users (user_name, email, pass, registration_date) VALUES ('$un', '$e', SHA1('$p'), NOW() )";		
-		$r = @mysqli_query ($dbc, $q); // Run the query.
-		if ($r) { // If it ran OK.
-		
-			// Print a message:
-			echo '<h1>Thank you!</h1>
-		<h2>You are now registered</h2><p><br /></p>';	
-		
-		} else { // If it did not run OK.
-			;
-			// Public message:
-			echo '<h1>System Error</h1>
-			<p class="error">You could not be registered. We apologize for any inconvenience.</p>'; 
-			
-			// Debugging message:
-			if (mysqli_errno($dbc) == 1062) {
-        		echo "<p class='error'>You have already registered.</p>";
-			}
-			mysqli_close($dbc);
-			exit();
-		} // End of if ($r) IF.
-		
-		mysqli_close($dbc); // Close the database connection.
+		try {
+			$q = "INSERT INTO users (user_name, email, pass, registration_date)
+				VALUES ('$un', '$e', SHA1('$p'), NOW())";
 
-		// Include the footer and quit the script:
-		exit();
+			$r = mysqli_query($dbc, $q);  // <-- now stored in $r
+
+			if ($r) {
+				echo "<h1>Thank you!</h1><h2>You are now registered</h2>";
+			}
+
+		} catch (mysqli_sql_exception $ex) {
+
+			if ($ex->getCode() == 1062) {
+				echo "<p class='error'>This email is already registered.</p>";
+			} else {
+				echo "<p class='error'>System error occurred.</p>";
+			}
+
+		}
+
 		
 	} else { // Report the errors.
 	
