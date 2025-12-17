@@ -10,7 +10,7 @@ Database name: hotelreview
 
 users (user_id, user_name, email, pass, registration_date) user_id is Primary Key
 
-hotels (hotel_id, hotel_name, address, city, country, creation_date) hotel_id is Primary Key
+hotels (hotel_id, hotel_name, address, city, country, creation_date, image) hotel_id is Primary Key, image is where file location for images are stored
 
 reviews (review_id, user_id, hotel_id, rating, creation_date) review_id is Primary Key, user_id and hotel_id are Foreign Keys from users and hotels, rating ranges from 1 to 5
 
@@ -30,6 +30,7 @@ hotel_name VARCHAR(100) NOT NULL,
 address VARCHAR(255) NOT NULL,
 city VARCHAR(100) NOT NULL,
 country VARCHAR(100) NOT NULL,
+image VARCHAR(255) NOT NULL,
 creation_date DATETIME NOT NULL,
 PRIMARY KEY(hotel_id)
 );
