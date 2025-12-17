@@ -15,6 +15,7 @@ hotels (hotel_id, hotel_name, address, city, country, creation_date, image) hote
 reviews (review_id, user_id, hotel_id, rating, creation_date) review_id is Primary Key, user_id and hotel_id are Foreign Keys from users and hotels, rating ranges from 1 to 5
 
 Table sqls:
+
 CREATE TABLE users(
 user_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 user_name VARCHAR(40) NOT NULL,
