@@ -49,6 +49,5 @@ CREATE TABLE reviews(
     CONSTRAINT FK_hotelOrder FOREIGN KEY (hotel_id)
         REFERENCES hotels(hotel_id),
     CONSTRAINT unique_user_hotel_review UNIQUE (user_id, hotel_id)
-
 );
 
