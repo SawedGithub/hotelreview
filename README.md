@@ -10,7 +10,7 @@ Database name: hotelreview
 
 users (user_id, user_name, email, pass, registration_date)
 
-hotels (hotel_id, hotel_name, address, city, country, creation_date, image)
+hotels (hotel_id, hotel_name, address, city, country, image, creation_date)
 
 reviews (review_id, user_id, hotel_id, rating, description, creation_date)
 
