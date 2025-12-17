@@ -96,10 +96,28 @@
     if (mysqli_num_rows($result) > 0) {
         
         while ($row = mysqli_fetch_assoc($result)) {
-            $hn = findhotel_name($row['hotel_id'],$dbc);
+            $hid = $row['hotel_id'];
+            $hn = findhotel_name($hid, $dbc);
+
+            // Fetch the hotel image
+            $imgQuery = "SELECT image FROM hotels WHERE hotel_id = $hid";
+            $imgResult = mysqli_query($dbc, $imgQuery);
+            $hotelImage = '';
+            if ($imgResult && mysqli_num_rows($imgResult) > 0) {
+                $imgRow = mysqli_fetch_assoc($imgResult);
+                $hotelImage = $imgRow['image'];
+            }
             
             // Applied review-card class and data-label span
             echo "<div class='review-card'>";
+
+            if (!empty($hotelImage)) {
+                echo "<div class='hotel-image-wrapper'>";
+                $imgPath = "hotelimg/" . htmlspecialchars($imgRow['image']);
+                echo "<img src='$imgPath' class='hotel-image' alt='Hotel image'>";
+                echo "</div>";
+            }
+
             echo "<span class='data-label'>Hotel:</span> " . htmlspecialchars($hn) . "<br>";
             echo "<span class='data-label'>Rating:</span> <span class='rating-text'>" . $row['rating'] . "/5</span><br>";
             // FIX: Display the content from 'description'

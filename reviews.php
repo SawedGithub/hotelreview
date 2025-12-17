@@ -16,7 +16,7 @@
 
 <?php 
     // Query to retrieve all hotels
-    $q = "SELECT hotel_id, hotel_name, address, city, country FROM hotels ORDER BY hotel_id ASC";
+    $q = "SELECT hotel_id, hotel_name, address, city, country, image FROM hotels ORDER BY hotel_id ASC";
     $result = mysqli_query($dbc, $q);
 
     if (!$result) {
@@ -30,7 +30,15 @@
 
             $hotel_id = $row['hotel_id'];
             
-            echo "<div class='hotel-card'>"; 
+            echo "<div class='hotel-card'>";
+            
+            if (!empty($row['image'])) {
+            $imgPath = "hotelimg/" . htmlspecialchars($row['image']);
+            echo "<div class='hotel-image-wrapper'>";
+            echo "<img src='$imgPath' alt='Hotel image' class='hotel-image'>";
+            echo "</div>";
+            }
+            
             echo "<span class='data-label'>Hotel name:</span> " . htmlspecialchars($row['hotel_name']) . "<br>";
             echo "<span class='data-label'>Address:</span> " . htmlspecialchars($row['address']) . "<br>";
             echo "<span class='data-label'>City:</span> " . htmlspecialchars($row['city']) . "<br>";

@@ -71,13 +71,16 @@ h1, h2, h3 {
 
 /* --- Cards (Hotel/Review Items) --- */
 .hotel-card, .review-card {
-    border: 1px solid #e0e0e0;
-    padding: 20px;
-    margin-bottom: 20px;
-    border-radius: 8px;
-    background-color: #ffffff;
-    transition: box-shadow 0.3s, border-color 0.3s;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 0;              /* remove padding for image */
+    margin: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    overflow: hidden;        /* clips anything outside */
+    display: flex;
+    flex-direction: column;
 }
+
 
 .hotel-card:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
@@ -189,3 +192,25 @@ input[type="submit"]:hover, button:hover {
 .user-menu a:hover {
     background-color: #d35400;
 }
+
+
+.hotel-image-wrapper {
+    width: 100%;
+    height: 400px;          /* all images same height */
+    overflow: hidden;       /* clip oversized images */
+    flex-shrink: 0;         /* prevents shrinking */
+    background-color: #eee; /* optional placeholder */
+}
+
+.hotel-card-content {
+    padding: 15px;
+}
+
+.hotel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;      /* fills container, crops excess */
+    display: block;
+}
+
+

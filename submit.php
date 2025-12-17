@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 // --- End of POST handler ---
 ?>
 
-<h1>Submit a Hotel Review</h1>
+<h2>Submit a Hotel Review</h2>
 
 <p>
     Can't find the hotel you are looking for? 

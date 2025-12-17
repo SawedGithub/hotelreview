@@ -14,6 +14,7 @@ CREATE TABLE hotels(
     address VARCHAR(255) NOT NULL,
     city VARCHAR(100) NOT NULL,
     country VARCHAR(100) NOT NULL,
+    image VARCHAR(255) NOT NULL,
     creation_date DATETIME NOT NULL,
     PRIMARY KEY(hotel_id)
 );
@@ -47,3 +48,8 @@ ADD CONSTRAINT unique_user_hotel_review UNIQUE (user_id, hotel_id);
 
 ALTER TABLE reviews
 ADD COLUMN description TEXT NOT NULL;
+
+Dec 16 2025
+
+ALTER TABLE hotels
+ADD image VARCHAR(255) NOT NULL AFTER country;

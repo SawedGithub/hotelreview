@@ -1,9 +1,4 @@
 # hotelreview
-Members:
-- Saw Zay Latt Naing
-- Lewis Pelaez Aparicio
-
-
 How to run:
 
 Run home.php via xampp through: localhost/--your folder name--/home.php

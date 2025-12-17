@@ -28,7 +28,7 @@
 
 <p>
     Our future plans for the website include adding features like <br>
-    <strong>- User photo uploads of hotels</strong><br>
+    <strong>- User photo uploads of hotels:<br></strong><i>Currently users can upload photos of the hotels they've went to but no extra photos of said hotels were implemented yet</i><br>
     <strong>- Hotel pricing</strong><br>
     <strong>- Hotel deals for users to get rewarded for their reviews</strong><br>
     ...and many more!
