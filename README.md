@@ -18,7 +18,7 @@ Table sqls:
 CREATE TABLE users(
 user_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 user_name VARCHAR(40) NOT NULL,
-email VARCHAR(60) NOT NULL,
+email VARCHAR(60) UNIQUE NOT NULL,
 pass CHAR(40) NOT NULL,
 registration_date DATETIME NOT NULL,
 PRIMARY KEY(user_id)
@@ -36,15 +36,18 @@ PRIMARY KEY(hotel_id)
 );
 
 CREATE TABLE reviews(
-review_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
-user_id MEDIUMINT UNSIGNED NOT NULL,
-hotel_id MEDIUMINT UNSIGNED NOT NULL,
-rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
-creation_date DATETIME NOT NULL,
-PRIMARY KEY(review_id),
-CONSTRAINT FK_userOrder FOREIGN KEY (user_id)
-REFERENCES users(user_id),
-CONSTRAINT FK_hotelOrder FOREIGN KEY (hotel_id) 
-REFERENCES hotels(hotel_id)
+    review_id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    user_id MEDIUMINT UNSIGNED NOT NULL,
+    hotel_id MEDIUMINT UNSIGNED NOT NULL,
+    rating INT NOT NULL CHECK (rating BETWEEN 1 AND 5),
+    description TEXT NOT NULL,
+    creation_date DATETIME NOT NULL,
+    PRIMARY KEY(review_id),
+    CONSTRAINT FK_userOrder FOREIGN KEY (user_id)
+        REFERENCES users(user_id),
+    CONSTRAINT FK_hotelOrder FOREIGN KEY (hotel_id)
+        REFERENCES hotels(hotel_id),
+    CONSTRAINT unique_user_hotel_review UNIQUE (user_id, hotel_id)
+
 );
 
